@@ -1,0 +1,46 @@
+name: Build Windows exe
+
+on:
+  push:
+    branches: [main]
+    paths: ["lock_solver.py", "requirements.txt", ".github/workflows/build-exe.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Check the solver imports and loads its templates
+        run: python -c "import lock_solver; m = lock_solver.load_model(); print(len(m.y), 'templates')"
+
+      - name: Build exe
+        run: pyinstaller --onefile --windowed --name AzraelLockSolver lock_solver.py
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AzraelLockSolver
+          path: dist/AzraelLockSolver.exe
+
+      - name: Publish to the "latest" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest build
+          body: "Download AzraelLockSolver.exe, double-click it, then screenshot the lock."
+          files: dist/AzraelLockSolver.exe
+          make_latest: true

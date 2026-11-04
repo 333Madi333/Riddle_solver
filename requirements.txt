@@ -1,4 +1,4 @@
-opencv-python
+opencv-python-headless
 numpy
 pillow
 pywin32; sys_platform == "win32"

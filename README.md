@@ -5,7 +5,18 @@ decoded digits appear in a small always-on-top window and are read out loud.
 
 Runs locally and offline, with no OCR engine or API key needed.
 
-## Setup (Windows)
+## Download (no Python needed)
+
+Get **AzraelLockSolver.exe** from the [Releases page](../../releases/latest) and double-click it.
+It's built automatically by GitHub Actions on every push to `main`
+(see `.github/workflows/build-exe.yml`).
+
+For the Russian voice, make a shortcut to the exe and add ` --ru` to the end of its Target.
+
+> Windows SmartScreen may warn about an unsigned app the first time: click
+> **More info → Run anyway**.
+
+## Run from source (Windows)
 
 ```
 pip install -r requirements.txt

@@ -1,0 +1,4 @@
+opencv-python
+numpy
+pillow
+pywin32; sys_platform == "win32"
